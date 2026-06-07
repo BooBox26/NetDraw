@@ -160,12 +160,6 @@ Use the appropriate template:
   considered.
 - **Question** — prefer GitHub Discussions for usage questions.
 
-### Security issues
-
-**Do not** file a public issue. Email `security@netdraw.local` (placeholder
-address) with a clear reproduction. We aim to acknowledge within 72 hours.
-See [SECURITY_AUDIT.md](./SECURITY_AUDIT.md).
-
 ---
 
 ## 🌐 RFCs for large changes

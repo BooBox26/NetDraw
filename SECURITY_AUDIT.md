@@ -4,9 +4,6 @@ This document presents the results of the security audit performed on
 **NETDRAW**, the implemented defenses, and the residual risks that contributors
 should be aware of.
 
-> 🛡️ _If you discover a vulnerability, please email `security@netdraw.local`
-> (placeholder address) **before** filing a public issue. We aim to acknowledge
-> reports within 72 hours._
 
 > [!CAUTION]
 > **Project Status: ALPHA (NOT PROD-READY)**

@@ -8,7 +8,7 @@ import swaggerUI from '@fastify/swagger-ui';
 import fastifyStatic from '@fastify/static';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
-import { existsSync } from 'node:fs';
+import { existsSync, mkdirSync } from 'node:fs';
 
 import { config, corsOrigins } from './config.js';
 import { healthRoutes } from './routes/health.js';
@@ -95,6 +95,19 @@ export async function buildApp(): Promise<FastifyInstance> {
     routePrefix: '/docs',
     uiConfig: { docExpansion: 'list', deepLinking: false },
   });
+
+  // Ensure DATA_DIR and exports directory exist
+  try {
+    if (!existsSync(config.DATA_DIR)) {
+      mkdirSync(config.DATA_DIR, { recursive: true });
+    }
+    const exportsDir = join(config.DATA_DIR, 'exports');
+    if (!existsSync(exportsDir)) {
+      mkdirSync(exportsDir, { recursive: true });
+    }
+  } catch (err) {
+    logger.warn(`Could not create data or exports directories: ${(err as Error).message}`);
+  }
 
   // Optional static export of generated PNG/SVG/PDF files.
   const exportsDir = join(config.DATA_DIR, 'exports');

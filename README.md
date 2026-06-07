@@ -34,7 +34,6 @@
 - [Deployment](#-deployment)
 - [Contributing](#-contributing)
 - [Roadmap](#-roadmap)
-- [Security & responsible disclosure](#-security--responsible-disclosure)
 - [License](#-license)
 
 ---
@@ -114,6 +113,7 @@ docker exec netdraw-backend node --import tsx apps/backend/scripts/seed.ts
 git clone https://github.com/netdraw/netdraw.git
 cd netdraw
 cp .env.example .env
+cp apps/backend/.env.example apps/backend/.env
 npm install
 npm run prisma:migrate -w @netdraw/backend
 npm run dev
@@ -311,15 +311,6 @@ A detailed, prioritized roadmap is in [ROADMAP.md](./ROADMAP.md). Highlights:
 > or a real-time collaboration platform. See the dedicated section in
 > [ROADMAP.md](./ROADMAP.md#-out-of-scope-explicit-non-goals) for the full
 > list.
-
----
-
-## 🛡️ Security & responsible disclosure
-
-If you discover a security vulnerability, please **do not** file a public issue.
-Email `security@netdraw.local` (placeholder) with a clear reproduction and we
-will respond within 72 hours. See [SECURITY_AUDIT.md](./SECURITY_AUDIT.md) for
-the current threat model and hardening notes.
 
 ---
 
