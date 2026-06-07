@@ -22,7 +22,7 @@ Runtime : Node.js 22 + Fastify (performances supérieures à Express, overhead m
 
 API : REST JSON propre (pas de GraphQL, la simplicité prime), versionnée (/api/v1/).
 
-Persistance : SQLite en mode fichier (/data/netdraw.db) par défaut, avec support optionnel de PostgreSQL via variable d'environnement. Prisma ORM pour le typage et les migrations.
+Persistance : SQLite en mode fichier par défaut (`file:./prisma/dev.db` pour le développement local, `file:/data/netdraw.db` pour le déploiement Docker via volume), avec support optionnel de PostgreSQL via variable d'environnement. Prisma ORM pour le typage et les migrations.
 
 Fichiers : Stockage local des projets (.ndj — JSON compressé) et exports (PNG/SVG/PDF) sur volume Docker monté (/data/exports).
 

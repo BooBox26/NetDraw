@@ -93,8 +93,8 @@ A detailed list is available in [ROADMAP.md](./ROADMAP.md).
 ### Run with Docker (recommended)
 
 ```bash
-git clone https://github.com/netdraw/netdraw.git
-cd netdraw
+git clone https://github.com/BooBox26/NetDraw.git
+cd NetDraw
 cp .env.example .env
 docker compose up -d
 ```
@@ -110,14 +110,20 @@ docker exec netdraw-backend node --import tsx apps/backend/scripts/seed.ts
 ### Local installation (without Docker)
 
 ```bash
-git clone https://github.com/netdraw/netdraw.git
-cd netdraw
+git clone https://github.com/BooBox26/NetDraw.git
+cd NetDraw
 cp .env.example .env
 cp apps/backend/.env.example apps/backend/.env
 npm install
 npm run prisma:migrate -w @netdraw/backend
 npm run dev
 ```
+
+> ℹ️ `npm run prisma:migrate` runs `prisma migrate dev` from
+> `apps/backend/`. It creates `apps/backend/prisma/dev.db` (because
+> `DATABASE_URL=file:./prisma/dev.db` in the local env template) and
+> applies every committed migration in `apps/backend/prisma/migrations/`.
+> Re-run this command whenever a contributor adds a new migration.
 
 - Frontend (Vite dev server): <http://localhost:5173>
 - Backend API: <http://localhost:3001>
@@ -127,24 +133,40 @@ npm run dev
 
 ## ⚙️ Configuration
 
-All runtime knobs live in environment variables. The repository ships with `.env.example` files at the root, in `apps/backend/`, and in `apps/frontend/`. Copy the relevant one to `.env` and adjust.
+All runtime knobs live in environment variables. The repository ships with
+`.env.example` files at the root, in `apps/backend/`, and in
+`apps/frontend/`. Copy the relevant one to `.env` and adjust.
 
-| Variable               | Default                                       | Description                                                       |
-| ---------------------- | --------------------------------------------- | ----------------------------------------------------------------- |
-| `NODE_ENV`             | `development`                                 | `development`, `test`, or `production`                            |
-| `LOG_LEVEL`            | `info`                                        | `fatal`, `error`, `warn`, `info`, `debug`, `trace`                |
-| `BACKEND_PORT`         | `3001`                                        | Port bound by the Fastify server                                  |
-| `DATABASE_URL`         | `file:/data/netdraw.db`                       | Prisma database URL (SQLite or PostgreSQL)                        |
-| `CORS_ORIGIN`          | `http://localhost:5173,http://localhost:8080` | Comma-separated list of allowed origins                           |
-| `RATE_LIMIT_MAX`       | `300`                                         | API requests per window per IP                                    |
-| `RATE_LIMIT_WINDOW`    | `1 minute`                                    | Rate-limit window                                                 |
-| `AUTH_MODE`            | `none`                                        | `none`, `local`, or `oidc`                                        |
-| `JWT_SECRET`           | _placeholder_                                 | **Required in production** — generate with `openssl rand -hex 32` |
-| `JWT_TTL`              | `12h`                                         | Token lifetime                                                    |
-| `DATA_DIR`             | `/data`                                       | Path where SQLite and exports are stored                          |
-| `MAX_UPLOAD_MB`        | `2`                                           | Max SVG upload size                                               |
-| `AUTOSAVE_INTERVAL_MS` | `30000`                                       | Auto-save interval                                                |
-| `TELEMETRY_ENABLED`    | `false`                                       | Opt-in anonymous usage telemetry                                  |
+> **Two environment templates ship with the project:**
+>
+> - **`.env.example`** (root) and **`apps/backend/.env.example`** — values
+>   tuned for **local development** (`DATABASE_URL=file:./prisma/dev.db`,
+>   `DATA_DIR=./data`, both relative to the project root).
+> - **`docker-compose.yml`** — values injected for the **containerised**
+>   stack (`DATABASE_URL=file:/data/netdraw.db`, `DATA_DIR=/data`).
+>
+> You do not need to edit anything when running with Docker Compose — the
+> compose file already sets the right values. For a local install, copy
+> the example files and tweak them as needed.
+
+### Reference
+
+| Variable               | Local dev default                             | Docker default          | Description                                                       |
+| ---------------------- | --------------------------------------------- | ----------------------- | ----------------------------------------------------------------- |
+| `NODE_ENV`             | `development`                                 | `production`            | `development`, `test`, or `production`                            |
+| `LOG_LEVEL`            | `info`                                        | `info`                  | `fatal`, `error`, `warn`, `info`, `debug`, `trace`                |
+| `BACKEND_PORT`         | `3001`                                        | `3001`                  | Port bound by the Fastify server                                  |
+| `DATABASE_URL`         | `file:./prisma/dev.db`                        | `file:/data/netdraw.db` | Prisma database URL (SQLite or PostgreSQL)                        |
+| `CORS_ORIGIN`          | `http://localhost:5173,http://localhost:8080` | `http://localhost:8080` | Comma-separated list of allowed origins                           |
+| `RATE_LIMIT_MAX`       | `300`                                         | `300`                   | API requests per window per IP                                    |
+| `RATE_LIMIT_WINDOW`    | `1 minute`                                    | `1 minute`              | Rate-limit window                                                 |
+| `AUTH_MODE`            | `none`                                        | `none`                  | `none`, `local`, or `oidc`                                        |
+| `JWT_SECRET`           | _placeholder_                                 | _placeholder_           | **Required in production** — generate with `openssl rand -hex 32` |
+| `JWT_TTL`              | `12h`                                         | `12h`                   | Token lifetime                                                    |
+| `DATA_DIR`             | `./data`                                      | `/data`                 | Path where SQLite and exports are stored                          |
+| `MAX_UPLOAD_MB`        | `2`                                           | `2`                     | Max SVG upload size                                               |
+| `AUTOSAVE_INTERVAL_MS` | `30000`                                       | `30000`                 | Auto-save interval                                                |
+| `TELEMETRY_ENABLED`    | `false`                                       | `false`                 | Opt-in anonymous usage telemetry                                  |
 
 > ⚠️ **Never commit a real `.env` file.** The `.gitignore` already excludes it.
 

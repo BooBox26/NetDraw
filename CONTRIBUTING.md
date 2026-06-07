@@ -27,9 +27,10 @@ tolerated and will result in a ban from the project.
 ### Installation
 
 ```bash
-git clone https://github.com/netdraw/netdraw.git
-cd netdraw
+git clone https://github.com/BooBox26/NetDraw.git
+cd NetDraw
 cp .env.example .env
+cp apps/backend/.env.example apps/backend/.env
 npm install
 npm run prisma:migrate -w @netdraw/backend
 ```

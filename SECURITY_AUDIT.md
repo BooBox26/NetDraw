@@ -4,7 +4,6 @@ This document presents the results of the security audit performed on
 **NETDRAW**, the implemented defenses, and the residual risks that contributors
 should be aware of.
 
-
 > [!CAUTION]
 > **Project Status: ALPHA (NOT PROD-READY)**
 >
