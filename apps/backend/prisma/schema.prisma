@@ -1,0 +1,109 @@
+// NETDRAW Prisma schema
+// Provider: SQLite by default, switchable to PostgreSQL via env var DATABASE_URL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  thumbnail   String?  // Base64-encoded SVG thumbnail
+  data        String   // JSON-serialized diagram (compressed in payload)
+  schema      Int      @default(1)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([updatedAt])
+}
+
+model Asset {
+  id        String   @id @default(cuid())
+  projectId String?
+  filename  String
+  mime      String
+  size      Int
+  data      String   // Sanitized SVG body
+  createdAt DateTime @default(now())
+}
+
+// Optional user model — only used when AUTH_MODE=local is enabled.
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  role         String   @default("user")
+  createdAt    DateTime @default(now())
+  projects     ProjectMember[]
+}
+
+model ProjectMember {
+  id        String   @id @default(cuid())
+  userId    String
+  projectId String
+  role      String   @default("editor") // viewer | editor | owner
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, projectId])
+}
+
+model Comment {
+  id          String   @id @default(cuid())
+  projectId   String
+  x           Float
+  y           Float
+  shapeId     String?
+  author      String
+  text        String
+  status      String   @default("open") // open | resolved
+  createdAt   DateTime @default(now())
+  replies     String   // JSON-serialized list of replies
+
+  @@index([projectId])
+}
+
+model VersionSnapshot {
+  id          String   @id @default(cuid())
+  projectId   String
+  label       String
+  createdAt   DateTime @default(now())
+  diagram     String   // JSON-serialized diagram snapshot
+
+  @@index([projectId])
+}
+
+model Branch {
+  id          String   @id @default(cuid())
+  projectId   String
+  name        String
+  createdAt   DateTime @default(now())
+  diagram     String   // JSON-serialized diagram branch data
+
+  @@unique([projectId, name])
+}
+
+model Workflow {
+  id          String   @id @default(cuid())
+  projectId   String   @unique
+  status      String   @default("draft")
+  signatures  String   // JSON-serialized approval signatures
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  projectId   String
+  timestamp   DateTime @default(now())
+  user        String
+  action      String
+  details     String
+
+  @@index([projectId])
+}

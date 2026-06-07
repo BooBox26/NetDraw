@@ -1,0 +1,85 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  color-scheme: light dark;
+  font-family:
+    'Inter',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+[contenteditable='true']:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 1px;
+}
+
+::selection {
+  background: rgba(37, 99, 235, 0.25);
+}
+
+/* Custom scrollbar */
+.nd-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.nd-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.nd-scroll::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.4);
+  border-radius: 4px;
+}
+.nd-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.7);
+}
+
+/* Print styles — hide UI panels, show only the canvas */
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+  body {
+    background: white !important;
+  }
+  .nd-no-print,
+  .nd-no-print * {
+    display: none !important;
+  }
+  .nd-canvas-wrapper {
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+  .nd-canvas-svg {
+    width: 100% !important;
+    height: auto !important;
+    page-break-inside: avoid;
+  }
+}

@@ -1,0 +1,2 @@
+# Keep this directory in git. The actual SQLite database and exports
+# are generated at runtime and should not be committed.

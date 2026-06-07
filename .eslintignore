@@ -1,0 +1,15 @@
+# Build outputs
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# Dependencies
+node_modules/
+
+# Test artifacts
+coverage/
+
+# Generated files
+**/*.d.ts
+apps/backend/src/generated/

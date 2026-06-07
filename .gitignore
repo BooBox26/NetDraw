@@ -1,0 +1,116 @@
+# ==============================================================================
+# NETDRAW .gitignore
+# ==============================================================================
+
+# --- Dependencies ---
+node_modules/
+.pnp/
+.pnp.js
+.yarn/
+
+# --- Build outputs ---
+dist/
+build/
+out/
+*.tsbuildinfo
+*.jsbundle
+*.map
+
+# --- Logs ---
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# --- Editor / IDE ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+.history/
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# --- Environment & Secrets ---
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+!.env.example
+apps/backend/.env
+apps/frontend/.env
+*.pem
+*.key
+*.crt
+*.p12
+
+# --- Database (runtime artifacts) ---
+data/*.db
+data/*.db-journal
+data/*.db-wal
+data/*.db-shm
+data/exports/*
+!data/.gitkeep
+!data/exports/.gitkeep
+apps/backend/prisma/*.db
+apps/backend/prisma/*.db-journal
+apps/backend/prisma/*.db-wal
+apps/backend/prisma/*.db-shm
+
+# --- Test artifacts ---
+coverage/
+*.lcov
+.nyc_output
+junit.xml
+test-results/
+
+# --- Cache directories ---
+.cache/
+.parcel-cache/
+.next/
+.nuxt/
+.vuepress/dist
+.serverless/
+.fusebox/
+.dynamodb/
+.tern-port
+.eslintcache
+.stylelintcache
+.prettierignore.bak
+
+# --- Tooling local state ---
+.antigravitycli/
+.gemini/
+.aider*
+.cursor/
+.continue/
+.claude/
+.kiro/
+
+# --- Runtime uploads (do not commit user assets) ---
+uploads/
+tmp/
+temp/
+*.tmp
+*.bak
+*.orig
+*.rej
+
+# --- Local docker artifacts ---
+.docker-data/
+
+# --- Third-party generated files ---
+apps/frontend/dist/
+apps/backend/dist/
+apps/backend/src/generated/
